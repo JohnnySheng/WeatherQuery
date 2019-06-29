@@ -3,5 +3,6 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'WeatherQuery' do
+  pod 'SQLite.swift', '~> 0.12.0'
   pod 'SwiftyJSON', '~> 4.0'
 end
