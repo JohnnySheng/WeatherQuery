@@ -8,10 +8,27 @@
 
 import UIKit
 
-
-
 class ViewController: UIViewController {
-
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var cityTextField: UITextField!
+    
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var tampLaben: UILabel!
+    
+    
+    @IBAction func switchPressed(_ sender: Any) {
+    }
+    
+    
+    @IBAction func goButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func locationButtonPressed(_ sender: Any) {
+    }
+    
+    
     private let apiManager = APIManager()
     
     override func viewDidLoad() {
