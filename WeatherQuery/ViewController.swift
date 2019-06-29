@@ -8,21 +8,40 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cityTextField: UITextField!
     
+    @IBOutlet weak var tempSwitch: UISwitch!
     @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var tampLaben: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
     
-    
-    @IBAction func switchPressed(_ sender: Any) {
+    var currentWeather:WeatherQuery?
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
     
     
+    @IBAction func switchPressed(_ sender: UISwitch) {
+        UserDefaultManager.saveSwitchStatus(sender.isOn)
+        if let weather = self.currentWeather{
+            self.updateMainViewWith(weather: weather)
+        }
+    }
+    
+    
+    
     @IBAction func goButtonPressed(_ sender: Any) {
+        cityTextField.resignFirstResponder()
+        if let inputedText = cityTextField.text{
+            getWeatherForCity(cityName: inputedText)
+        }else{
+            print("Please input a name of a city")
+        }
+        
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
@@ -34,11 +53,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        getWeather()
-        getWeatherForCity()
+        updateSwitch();
+        
     }
-
-
+    
+    func updateSwitch() {
+        self.tempSwitch.setOn(UserDefaultManager.switchStatus(), animated: false)
+    }
+        
+    func updateMainViewWith(weather : WeatherQuery) {
+        self.cityLabel.text = weather.cityName
+        self.tempLabel.text = self.tempString(weather: weather)
+    }
+    
+    func tempString(weather : WeatherQuery) -> String {
+        var tempMsm = Measurement(value: (weather.tempMin + weather.tempMax)/2.0, unit: UnitTemperature.celsius)
+        
+        if UserDefaultManager.switchStatus() {            tempMsm  = tempMsm.converted(to: UnitTemperature.fahrenheit)
+            return tempMsm.description
+        }else{
+            return tempMsm.description
+        }
+    }
 }
 
 extension ViewController {
@@ -57,16 +93,18 @@ extension ViewController {
         }
     }
     
-    private func getWeatherForCity() {
-        apiManager.getWeather(cityName:"Stuttgart") { (weather, error) in
+    private func getWeatherForCity(cityName:String){
+        apiManager.getWeather(cityName:cityName) { (weather, error) in
             if let error = error {
                 print("Get weather error: \(error.localizedDescription)")
                 return
             }
             guard let weather = weather  else { return }
-            print("Current Weather Object:")
-//            print(weather.name)
-            print(weather)
+            self.currentWeather = weather
+            DispatchQueue.main.async{
+                self.updateMainViewWith(weather: weather)
+            }
+            
         }
     }
 }

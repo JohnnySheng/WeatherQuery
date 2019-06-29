@@ -70,14 +70,20 @@ extension APIManager {
     }
     
     private func createWeatherObjectWith(jsonData: Data, completion: @escaping (_ data: WeatherQuery?, _ error: Error?) -> Void) {
-        let json = try!JSON(data: jsonData)
-        if let cityName = json["name"].string,
-            let minTemp = json["main"]["temp_min"].double,
-            let maxTemp = json["main"]["temp_max"].double{
-            let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, tempMax:maxTemp)
-            return completion(weatherQuery, nil)
-        }else{
-            print("Error creating current weather from JSON")
+        do{
+            let json = try JSON(data: jsonData)
+            if let cityName = json["name"].string,
+                let minTemp = json["main"]["temp_min"].double,
+                let maxTemp = json["main"]["temp_max"].double{
+                let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, tempMax:maxTemp)
+                return completion(weatherQuery, nil)
+            }else{
+                print("Error creating current weather from JSON")
+                throw SwiftyJSONError.notExist
+            }
+        }catch let error{
+            print("Error creating current weather from JSON because: \(error.localizedDescription)")
+            return completion(nil, error)
         }
     }
 }

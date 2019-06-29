@@ -37,11 +37,14 @@
                                                             <action selector="locationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q7x-Wx-Hsk"/>
                                                         </connections>
                                                     </button>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please input a city name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="std-cQ-54J">
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please input a city name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="std-cQ-54J">
                                                         <rect key="frame" x="50" y="0.0" width="267" height="50"/>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="XeF-9d-OET"/>
+                                                        </connections>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6U-vn-4Hw">
                                                         <rect key="frame" x="327" y="0.0" width="48" height="50"/>
@@ -83,9 +86,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°F" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yb4-WI-yit">
-                                                <rect key="frame" x="8" y="106" width="50" height="24"/>
+                                                <rect key="frame" x="8" y="106" width="240" height="24"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="mCc-Q3-ExR"/>
+                                                    <constraint firstAttribute="width" constant="240" id="mCc-Q3-ExR"/>
                                                     <constraint firstAttribute="height" constant="24" id="v1l-mK-Lup"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -144,7 +147,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R8u-MA-pK6">
-                                                            <rect key="frame" x="10" y="5" width="597" height="21"/>
+                                                            <rect key="frame" x="10" y="5" width="305" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="rj5-E3-YcP"/>
                                                             </constraints>
@@ -153,7 +156,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58a-r9-DRs">
-                                                            <rect key="frame" x="10" y="28" width="596" height="21"/>
+                                                            <rect key="frame" x="10" y="28" width="304" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="jEz-Mh-yNW"/>
                                                             </constraints>
@@ -162,7 +165,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nyg-D4-uiY">
-                                                            <rect key="frame" x="617" y="5" width="40" height="40"/>
+                                                            <rect key="frame" x="325" y="5" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="Keb-sB-Vum"/>
                                                                 <constraint firstAttribute="height" constant="40" id="zDL-Hz-NTo"/>
@@ -221,7 +224,8 @@
                         <outlet property="mainView" destination="K3N-lr-ECN" id="dSy-b8-ahN"/>
                         <outlet property="searchView" destination="SkH-FZ-09K" id="bl0-Yk-t3W"/>
                         <outlet property="tableView" destination="uKc-zw-Fx5" id="q2X-Hd-B6r"/>
-                        <outlet property="tampLaben" destination="Yb4-WI-yit" id="8On-5x-zV1"/>
+                        <outlet property="tempLabel" destination="Yb4-WI-yit" id="JM6-XR-Xxq"/>
+                        <outlet property="tempSwitch" destination="2ra-ER-KTC" id="6tN-pz-CoO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

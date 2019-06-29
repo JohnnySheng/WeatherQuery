@@ -17,6 +17,7 @@
 		0B318B0522C6E7A200DFA2BC /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B318B0422C6E7A200DFA2BC /* Sys.swift */; };
 		0B318B0722C6E7BB00DFA2BC /* WeatherQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B318B0622C6E7BB00DFA2BC /* WeatherQuery.swift */; };
 		0B318B0922C72CEE00DFA2BC /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B318B0822C72CEE00DFA2BC /* WeatherTableViewCell.swift */; };
+		0B318B0B22C7569D00DFA2BC /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B318B0A22C7569D00DFA2BC /* UserDefaultManager.swift */; };
 		0B4BDB3422C6D2E100E51DA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDB3322C6D2E100E51DA1 /* AppDelegate.swift */; };
 		0B4BDB3622C6D2E100E51DA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDB3522C6D2E100E51DA1 /* ViewController.swift */; };
 		0B4BDB3922C6D2E100E51DA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDB3722C6D2E100E51DA1 /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		0B318B0422C6E7A200DFA2BC /* Sys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sys.swift; sourceTree = "<group>"; };
 		0B318B0622C6E7BB00DFA2BC /* WeatherQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherQuery.swift; sourceTree = "<group>"; };
 		0B318B0822C72CEE00DFA2BC /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
+		0B318B0A22C7569D00DFA2BC /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		0B4BDB3022C6D2E100E51DA1 /* WeatherQuery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherQuery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4BDB3322C6D2E100E51DA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B4BDB3522C6D2E100E51DA1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				0B318AF622C6E6BD00DFA2BC /* APIManager.swift */,
+				0B318B0A22C7569D00DFA2BC /* UserDefaultManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				0B318B0522C6E7A200DFA2BC /* Sys.swift in Sources */,
 				0B318AFF22C6E76A00DFA2BC /* Main.swift in Sources */,
 				0B318B0722C6E7BB00DFA2BC /* WeatherQuery.swift in Sources */,
+				0B318B0B22C7569D00DFA2BC /* UserDefaultManager.swift in Sources */,
 				0B318B0322C6E79100DFA2BC /* Clouds.swift in Sources */,
 				0B4BDB3422C6D2E100E51DA1 /* AppDelegate.swift in Sources */,
 				0B318B0122C6E78000DFA2BC /* Wind.swift in Sources */,
@@ -487,7 +491,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -542,7 +546,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -560,7 +564,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JND9XWCEGQ;
 				INFOPLIST_FILE = WeatherQuery/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -580,7 +584,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JND9XWCEGQ;
 				INFOPLIST_FILE = WeatherQuery/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
