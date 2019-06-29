@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDelegate {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -45,6 +46,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
+        LocationService.sharedInstance.startUpdatingLocation()
     }
     
     
@@ -55,6 +57,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         updateSwitch();
         
+        LocationService.sharedInstance.delegate = self
+    }
+    
+    func tracingLocation(currentLocation: CLLocation) {
+        LocationService.sharedInstance.stopUpdatingLocation()
+        self.getWeatherForLocation(currentLocation)
+    }
+    func tracingLocationDidFailWithError(error: NSError) {
+        print(error.description)
+        LocationService.sharedInstance.stopUpdatingLocation()
     }
     
     func updateSwitch() {
@@ -69,27 +81,33 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func tempString(weather : WeatherQuery) -> String {
         var tempMsm = Measurement(value: (weather.tempMin + weather.tempMax)/2.0, unit: UnitTemperature.celsius)
         
-        if UserDefaultManager.switchStatus() {            tempMsm  = tempMsm.converted(to: UnitTemperature.fahrenheit)
-            return tempMsm.description
+        if UserDefaultManager.switchStatus() {
+            tempMsm  = tempMsm.converted(to: UnitTemperature.fahrenheit)
+        }
+        let tempValueString = String(format: "%.2f", tempMsm.value)
+        
+        if UserDefaultManager.switchStatus() {
+            return "\(tempValueString)°F"
         }else{
-            return tempMsm.description
+            return "\(tempValueString)°C"
         }
     }
 }
 
 extension ViewController {
     
-    private func getWeather() {
-        let coord = Coord(lon: 9.18, lat: 48.77)
+    private func getWeatherForLocation(_ location:CLLocation) {
+        let coord = Coord(lon: location.coordinate.longitude, lat: location.coordinate.latitude)
         apiManager.getWeather(coordinate:coord) { (weather, error) in
             if let error = error {
                 print("Get weather error: \(error.localizedDescription)")
                 return
             }
             guard let weather = weather  else { return }
-            print("Current Weather Object:")
-//            print(weather.name)
-            print(weather)
+            self.currentWeather = weather
+            DispatchQueue.main.async{
+                self.updateMainViewWith(weather: weather)
+            }
         }
     }
     
