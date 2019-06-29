@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class APIManager{
     let openWeatherApiId = "13e2c020058f0d5f75b8c16c4bb14a59"
@@ -15,24 +16,26 @@ class APIManager{
     
     var weatherURL = ""
     
-    func getWeather(cityName:String, completion: @escaping (_ weather: CurrentWeather?, _ error: Error?) -> Void) {
+    func getWeather(cityName:String, completion: @escaping (_ weather: WeatherQuery?, _ error: Error?) -> Void) {
         weatherURL = "\(openWeatherURL)?q=\(cityName)&units=metric&appid=\(openWeatherApiId)"
         getWeather(completion: completion)
     }
     
-    func getWeather(coordinate:Coord, completion: @escaping (_ weather: CurrentWeather?, _ error: Error?) -> Void) {
+    func getWeather(coordinate:Coord, completion: @escaping (_ weather: WeatherQuery?, _ error: Error?) -> Void) {
         weatherURL = "\(openWeatherURL)?lat=\(coordinate.lat)&lon=\(coordinate.lon)&units=metric&appid=\(openWeatherApiId)"
         getWeather(completion: completion)
     }
     
-    func getWeather(completion: @escaping (_ weather: CurrentWeather?, _ error: Error?) -> Void) {
+    
+    
+    func getWeather(completion: @escaping (_ weather: WeatherQuery?, _ error: Error?) -> Void) {
         getJSONFromURL(urlString: weatherURL) {(data, error) in
             guard let data = data, error == nil else {
                 print("Failed to get data")
                 return completion(nil, error)
             }
             
-            self.createWeatherObjectWith(json: data, completion: { (weather, error) in
+            self.createWeatherObjectWith(jsonData: data, completion: { (weather, error) in
                 if let error = error {
                     print("Failed to convert data")
                     return completion(nil, error)
@@ -66,15 +69,15 @@ extension APIManager {
         task.resume()
     }
     
-    private func createWeatherObjectWith(json: Data, completion: @escaping (_ data: CurrentWeather?, _ error: Error?) -> Void) {
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let weather = try decoder.decode(CurrentWeather.self, from: json)
-            return completion(weather, nil)
-        } catch let error {
-            print("Error creating current weather from JSON because: \(error.localizedDescription)")
-            return completion(nil, error)
+    private func createWeatherObjectWith(jsonData: Data, completion: @escaping (_ data: WeatherQuery?, _ error: Error?) -> Void) {
+        let json = try!JSON(data: jsonData)
+        if let cityName = json["name"].string,
+            let minTemp = json["main"]["temp_min"].double,
+            let maxTemp = json["main"]["temp_max"].double{
+            let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, tempMax:maxTemp)
+            return completion(weatherQuery, nil)
+        }else{
+            print("Error creating current weather from JSON")
         }
     }
 }

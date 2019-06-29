@@ -7,5 +7,5 @@
 //
 
 struct Clouds: Codable {
-    let all: Int？
+    let all: Int
 }

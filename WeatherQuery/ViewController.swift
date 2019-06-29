@@ -35,7 +35,7 @@ extension ViewController {
             }
             guard let weather = weather  else { return }
             print("Current Weather Object:")
-            print(weather.name)
+//            print(weather.name)
             print(weather)
         }
     }
@@ -48,7 +48,7 @@ extension ViewController {
             }
             guard let weather = weather  else { return }
             print("Current Weather Object:")
-            print(weather.name)
+//            print(weather.name)
             print(weather)
         }
     }
