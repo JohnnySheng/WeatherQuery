@@ -26,6 +26,8 @@
 		0B4BDB4922C6D2E300E51DA1 /* WeatherQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDB4822C6D2E300E51DA1 /* WeatherQueryTests.swift */; };
 		0B4BDB5422C6D2E300E51DA1 /* WeatherQueryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDB5322C6D2E300E51DA1 /* WeatherQueryUITests.swift */; };
 		0B55E20022C76ECC00C16553 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B55E1FF22C76ECC00C16553 /* LocationService.swift */; };
+		0B960B4B22C77CA400D574BF /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B960B4A22C77CA400D574BF /* SQLite.framework */; };
+		0B960B4D22C77D9D00D574BF /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B960B4C22C77D9D00D574BF /* Database.swift */; };
 		5371F42C1603AAF1D494124F /* Pods_WeatherQuery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D91D3818092C192C7E4042 /* Pods_WeatherQuery.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +74,8 @@
 		0B4BDB5322C6D2E300E51DA1 /* WeatherQueryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherQueryUITests.swift; sourceTree = "<group>"; };
 		0B4BDB5522C6D2E300E51DA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B55E1FF22C76ECC00C16553 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		0B960B4A22C77CA400D574BF /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B960B4C22C77D9D00D574BF /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		BC6FD3458A13EE17E89C8B9C /* Pods-WeatherQuery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherQuery.debug.xcconfig"; path = "Target Support Files/Pods-WeatherQuery/Pods-WeatherQuery.debug.xcconfig"; sourceTree = "<group>"; };
 		CDB3A48C1EEFDA35CDD81D69 /* Pods-WeatherQuery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherQuery.release.xcconfig"; path = "Target Support Files/Pods-WeatherQuery/Pods-WeatherQuery.release.xcconfig"; sourceTree = "<group>"; };
 		E6D91D3818092C192C7E4042 /* Pods_WeatherQuery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherQuery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B960B4B22C77CA400D574BF /* SQLite.framework in Frameworks */,
 				5371F42C1603AAF1D494124F /* Pods_WeatherQuery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +114,7 @@
 				0B318AF622C6E6BD00DFA2BC /* APIManager.swift */,
 				0B318B0A22C7569D00DFA2BC /* UserDefaultManager.swift */,
 				0B55E1FF22C76ECC00C16553 /* LocationService.swift */,
+				0B960B4C22C77D9D00D574BF /* Database.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -196,6 +202,7 @@
 		BE7A36DACB497530549F5AE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0B960B4A22C77CA400D574BF /* SQLite.framework */,
 				E6D91D3818092C192C7E4042 /* Pods_WeatherQuery.framework */,
 			);
 			name = Frameworks;
@@ -379,6 +386,7 @@
 				0B55E20022C76ECC00C16553 /* LocationService.swift in Sources */,
 				0B318B0922C72CEE00DFA2BC /* WeatherTableViewCell.swift in Sources */,
 				0B318AF722C6E6BD00DFA2BC /* APIManager.swift in Sources */,
+				0B960B4D22C77D9D00D574BF /* Database.swift in Sources */,
 				0B318AFB22C6E70A00DFA2BC /* Coord.swift in Sources */,
 				0B4BDB3622C6D2E100E51DA1 /* ViewController.swift in Sources */,
 				0B318AFD22C6E75600DFA2BC /* WeatherDetails.swift in Sources */,

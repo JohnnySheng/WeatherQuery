@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     @IBOutlet weak var tempLabel: UILabel!
     
     var currentWeather:WeatherQuery?
+    var database: Database!
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
@@ -55,6 +56,14 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        database = Database()
+        database.tableWeatherCreate()
+        
+//        let allCity = database.allCityNames()
+//        
+//        let shanghai = database.allWeatherItemsForCity(city: "shanghai")
+        
         updateSwitch();
         
         LocationService.sharedInstance.delegate = self
@@ -79,7 +88,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     }
     
     func tempString(weather : WeatherQuery) -> String {
-        var tempMsm = Measurement(value: (weather.tempMin + weather.tempMax)/2.0, unit: UnitTemperature.celsius)
+        var tempMsm = Measurement(value: weather.temp, unit: UnitTemperature.celsius)
         
         if UserDefaultManager.switchStatus() {
             tempMsm  = tempMsm.converted(to: UnitTemperature.fahrenheit)
@@ -105,6 +114,7 @@ extension ViewController {
             }
             guard let weather = weather  else { return }
             self.currentWeather = weather
+            self.database.insertWeatherQuery(weather)
             DispatchQueue.main.async{
                 self.updateMainViewWith(weather: weather)
             }
@@ -117,8 +127,10 @@ extension ViewController {
                 print("Get weather error: \(error.localizedDescription)")
                 return
             }
+            
             guard let weather = weather  else { return }
             self.currentWeather = weather
+            self.database.insertWeatherQuery(weather)
             DispatchQueue.main.async{
                 self.updateMainViewWith(weather: weather)
             }

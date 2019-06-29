@@ -11,5 +11,6 @@ struct WeatherQuery {
     let queryDate : Date
     let cityName : String
     let tempMin : Double
+    let temp    : Double
     let tempMax : Double
 }

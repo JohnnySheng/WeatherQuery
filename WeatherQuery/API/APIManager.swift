@@ -74,8 +74,9 @@ extension APIManager {
             let json = try JSON(data: jsonData)
             if let cityName = json["name"].string,
                 let minTemp = json["main"]["temp_min"].double,
+                let temp = json["main"]["temp"].double,
                 let maxTemp = json["main"]["temp_max"].double{
-                let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, tempMax:maxTemp)
+                let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, temp: temp, tempMax:maxTemp)
                 return completion(weatherQuery, nil)
             }else{
                 print("Error creating current weather from JSON")
