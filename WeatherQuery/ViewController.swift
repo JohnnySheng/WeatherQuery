@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     @IBOutlet weak var tempSwitch: UISwitch!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var currentWeather:WeatherQuery?
     var database: Database!
@@ -65,6 +66,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     }
     
     func goSearchingWithText() {
+        self.activityIndicator.startAnimating()
         if let inputedText = cityTextField.text{
             //remove the whitespace
             let trimmedText = inputedText.trimmingCharacters(in: .whitespaces)
@@ -75,6 +77,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
+        self.activityIndicator.startAnimating()
         LocationService.sharedInstance.startUpdatingLocation()
     }
     
@@ -111,6 +114,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
 
     // MARK: - Update views
     func updateEntireViewWithDatabase() {
+        self.activityIndicator.stopAnimating()
         cityList = database.allCityRows()
         updateEntireView()
     }
@@ -142,21 +146,27 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     // MARK: - Location Service Delegate
     func tracingLocation(currentLocation: CLLocation) {
         LocationService.sharedInstance.stopUpdatingLocation()
+        self.activityIndicator.stopAnimating()
         self.getWeatherForLocation(currentLocation)
     }
     
     func tracingLocationDidFailWithError(error: NSError) {
         print(error.description)
         LocationService.sharedInstance.stopUpdatingLocation()
+        self.activityIndicator.stopAnimating()
     }
 }
 
 extension ViewController {
     private func getWeatherForLocation(_ location:CLLocation) {
+        self.activityIndicator.startAnimating()
         let coord = Coord(lon: location.coordinate.longitude, lat: location.coordinate.latitude)
         apiManager.getWeather(coordinate:coord) { (weather, error) in
             if let error = error {
                 print("Get weather error: \(error.localizedDescription)")
+                DispatchQueue.main.async{
+                    self.activityIndicator.stopAnimating()
+                }
                 return
             }
             guard let weather = weather  else { return }
@@ -172,6 +182,9 @@ extension ViewController {
         apiManager.getWeather(cityName:cityName) { (weather, error) in
             if let error = error {
                 print("Get weather error: \(error.localizedDescription)")
+                DispatchQueue.main.async{
+                    self.activityIndicator.stopAnimating()
+                }
                 return
             }
             
