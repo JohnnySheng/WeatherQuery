@@ -49,7 +49,9 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     // MARK: - IBActions & Delagate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return textField.resignFirstResponder()
+        let result = textField.resignFirstResponder()
+        goSearchingWithText()
+        return result
     }
     
     @IBAction func switchPressed(_ sender: UISwitch) {
@@ -59,8 +61,14 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     @IBAction func goButtonPressed(_ sender: Any) {
         cityTextField.resignFirstResponder()
+        goSearchingWithText()
+    }
+    
+    func goSearchingWithText() {
         if let inputedText = cityTextField.text{
-            getWeatherForCity(cityName: inputedText)
+            //remove the whitespace
+            let trimmedText = inputedText.trimmingCharacters(in: .whitespaces)
+            getWeatherForCity(cityName: trimmedText)
         }else{
             print("Please input a name of a city")
         }

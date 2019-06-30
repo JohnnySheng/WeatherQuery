@@ -37,18 +37,19 @@
                                                             <action selector="locationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q7x-Wx-Hsk"/>
                                                         </connections>
                                                     </button>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please input a city name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="std-cQ-54J">
-                                                        <rect key="frame" x="50" y="0.0" width="267" height="50"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please input a place name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="std-cQ-54J">
+                                                        <rect key="frame" x="50" y="0.0" width="265" height="50"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="go" textContentType="address-level2"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="BYZ-38-t0r" id="XeF-9d-OET"/>
                                                         </connections>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6U-vn-4Hw">
-                                                        <rect key="frame" x="327" y="0.0" width="48" height="50"/>
+                                                        <rect key="frame" x="325" y="0.0" width="50" height="50"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="50" id="GAn-xk-yMU"/>
                                                             <constraint firstAttribute="height" constant="50" id="tNO-ry-bxT"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
@@ -123,7 +124,7 @@
                                                 </constraints>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.54617458329210167" green="1" blue="0.55851173196337922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="6rA-Pa-QrE" secondAttribute="trailing" constant="8" id="1NL-Xy-dQ0"/>
                                             <constraint firstAttribute="bottom" secondItem="Yb4-WI-yit" secondAttribute="bottom" constant="10" id="RCh-rO-zN3"/>
@@ -138,6 +139,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uKc-zw-Fx5">
                                         <rect key="frame" x="0.0" y="190" width="375" height="413"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="sectionIndexBackgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherTableViewCell" rowHeight="50" id="XWY-0G-Mbr" customClass="WeatherTableViewCell" customModule="WeatherQuery" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
@@ -188,6 +190,7 @@
                                                         <constraint firstItem="58a-r9-DRs" firstAttribute="leading" secondItem="3XK-1x-xi2" secondAttribute="leading" constant="10" id="nUk-M3-3Ie"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="chartButton" destination="Nyg-D4-uiY" id="Kin-Pn-R0A"/>
                                                     <outlet property="cityLabel" destination="R8u-MA-pK6" id="jj0-Dw-pMw"/>

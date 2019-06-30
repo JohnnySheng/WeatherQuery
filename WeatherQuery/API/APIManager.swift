@@ -17,7 +17,7 @@ class APIManager{
     var weatherURL = ""
     
     func getWeather(cityName:String, completion: @escaping (_ weather: WeatherQuery?, _ error: Error?) -> Void) {
-        weatherURL = "\(openWeatherURL)?q=\(cityName)&units=metric&appid=\(openWeatherApiId)"
+        weatherURL = "\(openWeatherURL)?q=\(cityName)&lang=de&units=metric&appid=\(openWeatherApiId)"
         getWeather(completion: completion)
     }
     
@@ -25,8 +25,6 @@ class APIManager{
         weatherURL = "\(openWeatherURL)?lat=\(coordinate.lat)&lon=\(coordinate.lon)&units=metric&appid=\(openWeatherApiId)"
         getWeather(completion: completion)
     }
-    
-    
     
     func getWeather(completion: @escaping (_ weather: WeatherQuery?, _ error: Error?) -> Void) {
         getJSONFromURL(urlString: weatherURL) {(data, error) in
@@ -50,11 +48,12 @@ class APIManager{
 
 extension APIManager {
     private func getJSONFromURL(urlString: String, completion: @escaping (_ data: Data?, _ error: Error?) -> Void) {
-        guard let url = URL(string: urlString) else {
+        guard let url =  URL(string: urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+            else {
             print("Error: Cannot create URL from string")
             return
         }
-        let urlRequest = URLRequest(url: url)
+       let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
             guard error == nil else {
                 print("Error calling api")
@@ -72,16 +71,35 @@ extension APIManager {
     private func createWeatherObjectWith(jsonData: Data, completion: @escaping (_ data: WeatherQuery?, _ error: Error?) -> Void) {
         do{
             let json = try JSON(data: jsonData)
-            if let cityName = json["name"].string,
-                let minTemp = json["main"]["temp_min"].double,
-                let temp = json["main"]["temp"].double,
-                let maxTemp = json["main"]["temp_max"].double{
-                let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, temp: temp, tempMax:maxTemp)
-                return completion(weatherQuery, nil)
+            var cityName : String
+            var minTemp : Double
+            var temp : Double
+            var maxTemp : Double
+            
+            if let cityNameQ = json["name"].string{
+                cityName = cityNameQ
             }else{
-                print("Error creating current weather from JSON")
-                throw SwiftyJSONError.notExist
+                throw json["name"].error!
             }
+            
+            if let minTempQ = json["main"]["temp_min"].double{
+                minTemp = minTempQ
+            }else{
+                throw json["main"]["temp_min"].error!
+            }
+            
+            if let tempQ = json["main"]["temp"].double{
+                temp = tempQ
+            }else{
+                throw json["main"]["temp"].error!
+            }
+            if let maxTempQ = json["main"]["temp_max"].double{
+                maxTemp = maxTempQ
+            }else{
+                throw json["main"]["temp_max"].error!
+            }
+            let weatherQuery = WeatherQuery(queryDate: Date(), cityName: cityName, tempMin:minTemp, temp: temp, tempMax:maxTemp)
+            return completion(weatherQuery, nil)
         }catch let error{
             print("Error creating current weather from JSON because: \(error.localizedDescription)")
             return completion(nil, error)

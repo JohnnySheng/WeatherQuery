@@ -87,7 +87,11 @@ struct Database {
         } catch let error {
             print(error)
         }
-        return Array(cityNames)
+        //sort the places
+        let result = Array(cityNames).sorted {
+            $0 < $1
+        }
+        return result
     }
     
     //get all weather query items of one city
