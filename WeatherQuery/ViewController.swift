@@ -107,6 +107,8 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         updateEntireView()
     }
     
+    
+    
     func updateEntireView() {
         if let weather = self.currentWeather{
             self.updateMainViewWith(weather: weather)
@@ -121,6 +123,13 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     func updateMainViewWith(weather : WeatherQuery) {
         self.cityLabel.text = weather.cityName
         self.tempLabel.text = TempTools.tempString(weather: weather)
+        if weather.temp < 10 {
+            self.mainView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        }else if weather.temp > 25{
+            self.mainView.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        }else{
+            self.mainView.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        }
     }
     // MARK: - Location Service Delegate
     func tracingLocation(currentLocation: CLLocation) {
