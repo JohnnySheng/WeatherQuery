@@ -173,6 +173,7 @@
                                                             <state key="normal" image="chart"/>
                                                             <connections>
                                                                 <action selector="chartButtonPressed:" destination="XWY-0G-Mbr" eventType="touchUpInside" id="teS-A1-zhi"/>
+                                                                <segue destination="rHz-CK-jID" kind="show" identifier="showChartSegue" id="a5X-3n-gzu"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -235,6 +236,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1240.8" y="-252.32383808095955"/>
+        </scene>
+        <!--Weather Chart View Controller-->
+        <scene sceneID="vJK-u4-if0">
+            <objects>
+                <viewController id="rHz-CK-jID" customClass="WeatherChartViewController" customModule="WeatherQuery" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dXq-Y6-3wM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLK-RP-Xa6" customClass="CandleStickChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aLK-RP-Xa6" firstAttribute="bottom" secondItem="OMx-Ah-r6t" secondAttribute="bottom" id="SIC-Ga-hC9"/>
+                            <constraint firstItem="aLK-RP-Xa6" firstAttribute="top" secondItem="OMx-Ah-r6t" secondAttribute="top" id="cOE-FP-0S6"/>
+                            <constraint firstItem="aLK-RP-Xa6" firstAttribute="leading" secondItem="OMx-Ah-r6t" secondAttribute="leading" id="l3U-Xe-DtY"/>
+                            <constraint firstItem="aLK-RP-Xa6" firstAttribute="trailing" secondItem="OMx-Ah-r6t" secondAttribute="trailing" id="vvh-Dr-Iy1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OMx-Ah-r6t"/>
+                    </view>
+                    <connections>
+                        <outlet property="candleStickChart" destination="aLK-RP-Xa6" id="Orb-Et-nxn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Evu-kq-pvJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1976.8" y="-252.32383808095955"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ivf-lp-biC">

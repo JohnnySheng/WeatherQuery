@@ -25,7 +25,9 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     var database: Database!
     var cityList:Array<WeatherQuery>!
     
-    private let weatherTableCellIdentifier = "weatherTableViewCell"
+    fileprivate let weatherTableCellIdentifier = "weatherTableViewCell"
+    
+    fileprivate let showChartSegueIdentifier = "showChartSegue"
     
     private let apiManager = APIManager()
     
@@ -60,13 +62,29 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         let query = cityList[indexPath.row]
         weatherQueryCell.cityLabel.text = self.cityTempString(fromQuery: query)
         weatherQueryCell.dateLabel.text = dateString(fromDate: query.queryDate)
+        weatherQueryCell.chartButton.tag = indexPath.row
         return weatherQueryCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50.0
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showChartSegueIdentifier {
+            let destination = segue.destination as? WeatherChartViewController
+            let rowIndex = (sender as! UIButton).tag
+            let selectedWeathQuery = self.cityList[rowIndex] as WeatherQuery
+            destination!.selectedWeathQuery = selectedWeathQuery
+            destination!.database = self.database
+            destination!.title = selectedWeathQuery.cityName
+        }
+    }
 
+    
+
+    // MARK: - Tools
     
     func cityTempString(fromQuery query:WeatherQuery) -> String {
         let tempString = self.tempString(weather: query)
@@ -176,5 +194,7 @@ extension ViewController {
             
         }
     }
+    
+    //Mark: Se
 }
 

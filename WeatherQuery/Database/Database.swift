@@ -19,20 +19,16 @@ struct Database {
     
     //connectDatabase
     mutating func connectDatabase(filePath: String = "/Documents") -> Void {
-        //let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-//        let db = try? Connection("\(path)/db.sqlite3")
         let sqlFilePath = NSHomeDirectory() + filePath + "/db.sqlite3"
         
-        do { // 与数据库建立连接
+        do {
             db = try Connection(sqlFilePath)
-            print("与数据库建立连接 成功")
+            print("Connect database successfully")
         } catch {
-            print("与数据库建立连接 失败：\(error)")
+            print("Connect database failed：\(error)")
         }
-        
     }
     
-    // ===================================== Weather =====================================
     let tableWeather = Table("table_Weather")
     let table_weatherID = Expression<Int64>("weather_id")
     let table_cityName = Expression<String>("city_name")
@@ -43,18 +39,18 @@ struct Database {
     
     // Create table
     func tableWeatherCreate() -> Void {
-        do { // create table_Weather
+        do {
             try db.run(tableWeather.create(ifNotExists: true) { table in
-                table.column(table_weatherID, primaryKey: .autoincrement) // 主键自加且不为空
+                table.column(table_weatherID, primaryKey: .autoincrement)
                 table.column(table_cityName)
                 table.column(table_tempMin)
                 table.column(table_temp)
                 table.column(table_tempMax)
                 table.column(table_queryDate)
             })
-            print("create table weather successfully")
+            print("Create table weather successfully")
         } catch {
-            print("create table weather：\(error)")
+            print("Create table weather：\(error)")
         }
     }
     
@@ -74,7 +70,7 @@ struct Database {
     }
     
     // Traversing
-    func queryTableLamp() -> Void {
+    func queryTableWeather() -> Void {
         for item in (try! db.prepare(tableWeather)) {
             print("The entire table id: \(item[table_weatherID]), city: \(item[table_cityName]), min temp: \(item[table_tempMin]), temp: \(item[table_temp]), max temp: \(item[table_tempMax]), date: \(item[table_queryDate])")
         }
@@ -99,7 +95,7 @@ struct Database {
         
         var weatherQueries:[WeatherQuery] = []
         do {
-            for item in try db.prepare(tableWeather.filter(table_cityName.lowercaseString==city).order(table_queryDate)) {
+            for item in try db.prepare(tableWeather.filter(table_cityName.lowercaseString==city.lowercased()).order(table_queryDate.desc)) {
                 print("allWeatherItemsForCity:\(item)")
                 let weatherQuery = WeatherQuery(queryDate: item[table_queryDate], cityName: item[table_cityName], tempMin: item[table_tempMin], temp: item[table_temp], tempMax: item[table_tempMax])
                 weatherQueries.append(weatherQuery)
