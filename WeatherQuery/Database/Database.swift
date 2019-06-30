@@ -29,12 +29,12 @@ struct Database {
         }
     }
     
-    let tableWeather = Table("table_Weather")
+    let tableWeather    = Table("table_Weather")
     let table_weatherID = Expression<Int64>("weather_id")
-    let table_cityName = Expression<String>("city_name")
-    let table_tempMin = Expression<Double>("temp_min")
-    let table_temp = Expression<Double>("temp")
-    let table_tempMax = Expression<Double>("temp_max")
+    let table_cityName  = Expression<String>("city_name")
+    let table_tempMin   = Expression<Double>("temp_min")
+    let table_temp      = Expression<Double>("temp")
+    let table_tempMax   = Expression<Double>("temp_max")
     let table_queryDate = Expression<Date>("query_date")
     
     // Create table
