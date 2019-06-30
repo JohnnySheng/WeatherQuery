@@ -81,7 +81,7 @@ struct Database {
         var cityNames : Set = Set<String>()
         do {
             for item in try db.prepare(tableWeather.select(table_cityName)) {
-                print("allCityNames:\(item)")
+//                print("allCityNames:\(item)")
                 cityNames.insert(item[table_cityName])
             }
         } catch let error {
@@ -115,7 +115,7 @@ struct Database {
         var weatherQuery:WeatherQuery?
         do {
             for item in try db.prepare(tableWeather.filter(table_cityName.lowercaseString==city.lowercased()).order(table_queryDate.desc)) {
-                print("weatherQueryItemForCity:\(item)")
+//                print("weatherQueryItemForCity:\(item)")
                 weatherQuery = WeatherQuery(queryDate: item[table_queryDate], cityName: item[table_cityName], tempMin: item[table_tempMin], temp: item[table_temp], tempMax: item[table_tempMax])
                 break;
             }

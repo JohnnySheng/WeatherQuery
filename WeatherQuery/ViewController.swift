@@ -36,6 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         databaseInit()
         updateSwitch()
         LocationService.sharedInstance.delegate = self
+        UserDefaultManager.saveLocationQueryStatus(false)
     }
     
     func databaseInit(){
@@ -66,7 +67,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     }
     
     func goSearchingWithText() {
-        self.activityIndicator.startAnimating()
+        self.activityIndicatorStart()
         if let inputedText = cityTextField.text{
             //remove the whitespace
             let trimmedText = inputedText.trimmingCharacters(in: .whitespaces)
@@ -76,8 +77,20 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         }
     }
     
-    @IBAction func locationButtonPressed(_ sender: Any) {
+    func activityIndicatorStart() {
         self.activityIndicator.startAnimating()
+    }
+    
+    func activityIndicatorStop() {
+        self.activityIndicator.stopAnimating()
+        if UserDefaultManager.locationQueryStatus() {
+            UserDefaultManager.saveLocationQueryStatus(false)
+        }
+        cityTextField.text = ""
+    }
+    
+    @IBAction func locationButtonPressed(_ sender: Any) {
+        self.activityIndicatorStart()
         LocationService.sharedInstance.startUpdatingLocation()
     }
     
@@ -114,7 +127,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
 
     // MARK: - Update views
     func updateEntireViewWithDatabase() {
-        self.activityIndicator.stopAnimating()
+        self.activityIndicatorStop()
         cityList = database.allCityRows()
         updateEntireView()
     }
@@ -134,7 +147,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     func updateMainViewWith(weather : WeatherQuery) {
         self.cityLabel.text = weather.cityName
-        self.tempLabel.text = TempTools.tempString(weather: weather)
+        self.tempLabel.text = TempTools.tempStringWithoutLetter(weather: weather)
         if weather.temp < 10 {
             self.mainView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         }else if weather.temp > 25{
@@ -146,26 +159,29 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     // MARK: - Location Service Delegate
     func tracingLocation(currentLocation: CLLocation) {
         LocationService.sharedInstance.stopUpdatingLocation()
-        self.activityIndicator.stopAnimating()
+        if UserDefaultManager.locationQueryStatus() {
+            return;
+        }
+        UserDefaultManager.saveLocationQueryStatus(true)
         self.getWeatherForLocation(currentLocation)
     }
     
     func tracingLocationDidFailWithError(error: NSError) {
         print(error.description)
         LocationService.sharedInstance.stopUpdatingLocation()
-        self.activityIndicator.stopAnimating()
+        self.activityIndicatorStop()
     }
 }
 
 extension ViewController {
     private func getWeatherForLocation(_ location:CLLocation) {
-        self.activityIndicator.startAnimating()
+        self.activityIndicatorStart()
         let coord = Coord(lon: location.coordinate.longitude, lat: location.coordinate.latitude)
         apiManager.getWeather(coordinate:coord) { (weather, error) in
             if let error = error {
                 print("Get weather error: \(error.localizedDescription)")
                 DispatchQueue.main.async{
-                    self.activityIndicator.stopAnimating()
+                    self.activityIndicatorStop()
                 }
                 return
             }
@@ -183,7 +199,7 @@ extension ViewController {
             if let error = error {
                 print("Get weather error: \(error.localizedDescription)")
                 DispatchQueue.main.async{
-                    self.activityIndicator.stopAnimating()
+                    self.activityIndicatorStop()
                 }
                 return
             }

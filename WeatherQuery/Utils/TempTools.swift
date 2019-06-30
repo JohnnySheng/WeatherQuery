@@ -21,6 +21,15 @@ class TempTools {
         return "\(tempValueString)\(currentUnit())"
     }
     
+    static func tempStringWithoutLetter(weather : WeatherQuery) -> String {
+        let rightValue = rightValueByUnit(grad: weather.temp)
+        let tempValueString = String(format: "%.2f", rightValue)
+        
+        return "\(tempValueString)°"
+    }
+    
+    
+    
     //right value according to unit,default is Celsius
     static func rightValueByUnit(grad: Double) -> Double{
         var tempMsm = Measurement(value: grad, unit: UnitTemperature.celsius)

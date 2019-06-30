@@ -40,7 +40,7 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please input a place name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="std-cQ-54J">
                                                         <rect key="frame" x="50" y="0.0" width="265" height="50"/>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="go" textContentType="address-level2"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="BYZ-38-t0r" id="XeF-9d-OET"/>
@@ -86,7 +86,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°F" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yb4-WI-yit">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yb4-WI-yit">
                                                 <rect key="frame" x="8" y="106" width="240" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="240" id="mCc-Q3-ExR"/>

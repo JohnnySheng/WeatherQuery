@@ -13,7 +13,9 @@ class UserDefaultManager {
     
     //On:True:Fahrenheit
     static var userDefaultSwitch = "UserDefaultSwitch"
+    static var userDefaultLocationQuery = "UserDefaultLocationQuerying"
 
+    //MARK: - For Switch
     static func switchStatus() -> Bool {
         let currentStatus = UserDefaults.standard.bool(forKey: UserDefaultManager.userDefaultSwitch)
         return currentStatus
@@ -22,4 +24,15 @@ class UserDefaultManager {
     static func saveSwitchStatus(_ status : Bool) {
         UserDefaults.standard.set(status, forKey: UserDefaultManager.userDefaultSwitch)
     }
+  
+    //MARK: - For Location Querying
+    static func locationQueryStatus() -> Bool {
+        let currentStatus = UserDefaults.standard.bool(forKey: UserDefaultManager.userDefaultLocationQuery)
+        return currentStatus
+    }
+    
+    static func saveLocationQueryStatus(_ status : Bool) {
+        UserDefaults.standard.set(status, forKey: UserDefaultManager.userDefaultLocationQuery)
+    }
+    
 }
