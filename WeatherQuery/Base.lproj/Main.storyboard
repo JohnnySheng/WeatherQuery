@@ -141,8 +141,26 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="sectionIndexBackgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="emptyTableViewCell" id="toI-4s-NBa" customClass="EmptyTableViewCell" customModule="WeatherQuery" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="toI-4s-NBa" id="6An-kA-Bxy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Data Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhN-4P-hWj">
+                                                            <rect key="frame" x="0.0" y="0.0" width="368" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.88229892830000001" green="0.89121103869999996" blue="0.89121103869999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherTableViewCell" rowHeight="50" id="XWY-0G-Mbr" customClass="WeatherTableViewCell" customModule="WeatherQuery" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XWY-0G-Mbr" id="3XK-1x-xi2">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>

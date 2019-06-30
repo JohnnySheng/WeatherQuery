@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     var cityList:Array<WeatherQuery>!
     
     fileprivate let weatherTableCellIdentifier = "weatherTableViewCell"
+    fileprivate let emptyTableCellIndentifier = "emptyTableViewCell"
     fileprivate let showChartSegueIdentifier = "showChartSegue"
     
     private let apiManager = APIManager()
@@ -96,10 +97,20 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cityList.count
+        if cityList.count > 0 {
+            return cityList.count
+        }else{
+            return 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if cityList.count == 0{
+            let emptyTableViewCell =
+                tableView.dequeueReusableCell(withIdentifier: emptyTableCellIndentifier, for: indexPath) as! EmptyTableViewCell
+            return emptyTableViewCell
+        }
         let weatherQueryCell =
             tableView.dequeueReusableCell(withIdentifier: weatherTableCellIdentifier, for: indexPath) as! WeatherTableViewCell
         let query = cityList[indexPath.row]
