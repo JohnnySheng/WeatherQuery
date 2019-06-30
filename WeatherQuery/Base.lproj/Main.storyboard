@@ -190,7 +190,7 @@
                                                         <constraint firstItem="58a-r9-DRs" firstAttribute="leading" secondItem="3XK-1x-xi2" secondAttribute="leading" constant="10" id="nUk-M3-3Ie"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
-                                                <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.88229892834789392" green="0.89121103873524643" blue="0.89121103873524643" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <outlet property="chartButton" destination="Nyg-D4-uiY" id="Kin-Pn-R0A"/>
                                                     <outlet property="cityLabel" destination="R8u-MA-pK6" id="jj0-Dw-pMw"/>
