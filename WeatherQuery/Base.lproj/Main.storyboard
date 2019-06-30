@@ -135,7 +135,7 @@
                                             <constraint firstItem="6rA-Pa-QrE" firstAttribute="leading" secondItem="K3N-lr-ECN" secondAttribute="leading" constant="8" id="qZn-lw-dSq"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uKc-zw-Fx5">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uKc-zw-Fx5">
                                         <rect key="frame" x="0.0" y="190" width="375" height="413"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
@@ -151,7 +151,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="rj5-E3-YcP"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -160,7 +160,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="jEz-Mh-yNW"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -194,6 +194,10 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="GOz-1d-snn"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="IBL-SL-yaF"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <constraints>

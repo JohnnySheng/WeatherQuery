@@ -9,7 +9,9 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDelegate {
+class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDelegate, UITableViewDelegate,UITableViewDataSource{
+    // MARK: -
+    
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -21,20 +23,75 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     var currentWeather:WeatherQuery?
     var database: Database!
+    var cityList:Array<WeatherQuery>!
+    
+    private let weatherTableCellIdentifier = "weatherTableViewCell"
+    
+    private let apiManager = APIManager()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        database = Database()
+        database.tableWeatherCreate()
+        
+        cityList = database.allCityRows()
+        
+//            let allCity = database.allCityNames()
+        
+        //
+//        let shanghai = database.allWeatherItemsForCity(city: )
+        
+        updateSwitch();
+        
+        LocationService.sharedInstance.delegate = self
+    }
+    
+    
+    // MARK: - Table view data source
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cityList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let weatherQueryCell =
+            tableView.dequeueReusableCell(withIdentifier: weatherTableCellIdentifier, for: indexPath) as! WeatherTableViewCell
+        let query = cityList[indexPath.row]
+        weatherQueryCell.cityLabel.text = self.cityTempString(fromQuery: query)
+        weatherQueryCell.dateLabel.text = dateString(fromDate: query.queryDate)
+        return weatherQueryCell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50.0
+    }
 
+    
+    func cityTempString(fromQuery query:WeatherQuery) -> String {
+        let tempString = self.tempString(weather: query)
+        return "\(query.cityName), \(tempString)"
+    }
+    
+    func dateString(fromDate date:Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        return dateFormatter.string(from: date)
+    }
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
     
-    
+    // MARK: - IBActions
     @IBAction func switchPressed(_ sender: UISwitch) {
         UserDefaultManager.saveSwitchStatus(sender.isOn)
         if let weather = self.currentWeather{
             self.updateMainViewWith(weather: weather)
         }
     }
-    
-    
     
     @IBAction func goButtonPressed(_ sender: Any) {
         cityTextField.resignFirstResponder()
@@ -50,25 +107,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         LocationService.sharedInstance.startUpdatingLocation()
     }
     
-    
-    private let apiManager = APIManager()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        database = Database()
-        database.tableWeatherCreate()
-        
-//        let allCity = database.allCityNames()
-//        
-//        let shanghai = database.allWeatherItemsForCity(city: "shanghai")
-        
-        updateSwitch();
-        
-        LocationService.sharedInstance.delegate = self
-    }
-    
+ 
     func tracingLocation(currentLocation: CLLocation) {
         LocationService.sharedInstance.stopUpdatingLocation()
         self.getWeatherForLocation(currentLocation)
