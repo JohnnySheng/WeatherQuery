@@ -16,14 +16,14 @@ class TempTools {
    
     static func tempString(weather : WeatherQuery) -> String {
         let rightValue = rightValueByUnit(grad: weather.temp)
-        let tempValueString = String(format: "%.2f", rightValue)
+        let tempValueString = String(format: "%.f", rightValue)
         
         return "\(tempValueString)\(currentUnit())"
     }
     
     static func tempStringWithoutLetter(weather : WeatherQuery) -> String {
         let rightValue = rightValueByUnit(grad: weather.temp)
-        let tempValueString = String(format: "%.2f", rightValue)
+        let tempValueString = String(format: "%.f", rightValue)
         
         return "\(tempValueString)°"
     }

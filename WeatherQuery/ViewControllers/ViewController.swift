@@ -15,10 +15,9 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cityTextField: UITextField!
-    @IBOutlet weak var tempSwitch: UISwitch!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var tableHeaderView : WeatherTableHeaderView!
     
     var currentWeather:WeatherQuery?
     var database: Database!
@@ -34,10 +33,12 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         databaseInit()
-        updateSwitch()
+        updateTableHeader()
         LocationService.sharedInstance.delegate = self
         UserDefaultManager.saveLocationQueryStatus(false)
+        
     }
     
     func databaseInit(){
@@ -46,8 +47,30 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         cityList = database.allCityRows()
     }
     
-    func updateSwitch() {
-        self.tempSwitch.setOn(UserDefaultManager.switchStatus(), animated: false)
+    func updateTableHeader() {
+        
+        //mark
+        let mainView = Bundle.main.loadNibNamed("WeatherMainView", owner: nil, options: nil)![0] as! WeatherMainView
+        
+        
+        tableHeaderView = WeatherTableHeaderView(subview: mainView, andType: 4)
+        tableHeaderView.tableView = self.tableView
+        tableHeaderView.maximumOffsetY = -60
+        
+        mainView.tempLableOriginalRect = mainView.tempLabel.frame
+        let mainViewFrame = mainView.frame
+        let tempLabelFrame = mainView.tempLableOriginalRect!
+        
+        mainView.tempLabelDestinationRect = CGRect.init(x: mainViewFrame.size.width - (tempLabelFrame.size.width + tempLabelFrame.origin.x), y: mainViewFrame.size.height - (tempLabelFrame.size.height + tempLabelFrame.origin.y), width: tempLabelFrame.size.width, height: tempLabelFrame.size.height)
+        
+        self.tableView.tableHeaderView = tableHeaderView
+        
+        tableHeaderView.mainSubview?.tempSwitch.addTarget(self, action:#selector(switchPressed(_:)), for: .touchUpInside)
+    }
+    
+    @objc func switchPressed(_ sender: UISwitch) {
+        UserDefaultManager.saveSwitchStatus(sender.isOn)
+        updateEntireView()
     }
     
     // MARK: - IBActions & Delagate
@@ -55,11 +78,6 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         let result = textField.resignFirstResponder()
         goSearchingWithText()
         return result
-    }
-    
-    @IBAction func switchPressed(_ sender: UISwitch) {
-        UserDefaultManager.saveSwitchStatus(sender.isOn)
-        updateEntireView()
     }
     
     @IBAction func goButtonPressed(_ sender: Any) {
@@ -124,6 +142,11 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         return 50.0
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let headerView = self.tableView.tableHeaderView as! WeatherTableHeaderView
+        headerView.layoutHeaderViewForScrollViewOffset(offset: scrollView.contentOffset)
+    }
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showChartSegueIdentifier {
@@ -157,14 +180,14 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     }
     
     func updateMainViewWith(weather : WeatherQuery) {
-        self.cityLabel.text = weather.cityName
-        self.tempLabel.text = TempTools.tempStringWithoutLetter(weather: weather)
+        tableHeaderView.mainSubview?.cityLabel.text = weather.cityName
+        tableHeaderView.mainSubview?.tempLabel.text = TempTools.tempStringWithoutLetter(weather: weather)
         if weather.temp < 10 {
-            self.mainView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+            tableHeaderView.mainSubview?.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         }else if weather.temp > 25{
-            self.mainView.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+            tableHeaderView.mainSubview?.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
         }else{
-            self.mainView.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            tableHeaderView.mainSubview?.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
         }
     }
     // MARK: - Location Service Delegate
