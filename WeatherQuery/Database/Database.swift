@@ -12,12 +12,12 @@ import SQLite
 struct Database {
     
     var db: Connection!
-    
+    //MARK: - Init
     init() {
         connectDatabase()
     }
     
-    //connectDatabase
+    //MARK: - Connect Database
     mutating func connectDatabase(filePath: String = "/Documents") -> Void {
         let sqlFilePath = NSHomeDirectory() + filePath + "/db.sqlite3"
         
@@ -28,7 +28,7 @@ struct Database {
             print("Connect database failed：\(error)")
         }
     }
-    
+    //Define Table named "table_Weather"
     let tableWeather    = Table("table_Weather")
     let table_weatherID = Expression<Int64>("weather_id")
     let table_cityName  = Expression<String>("city_name")
@@ -54,7 +54,7 @@ struct Database {
         }
     }
     
-    //Insertiong
+    //Insert
     func insertWeatherQuery(_ weather : WeatherQuery) {
         tableWeatherInsertItem(city: weather.cityName, tempMin: weather.tempMin, temp:weather.temp, tempMax: weather.tempMax, queryDate: weather.queryDate)
     }
@@ -76,18 +76,17 @@ struct Database {
         }
     }
     
-    //get all of the cities
+    //get all of the city names
     func allCityNames() -> Array<String> {
         var cityNames : Set = Set<String>()
         do {
             for item in try db.prepare(tableWeather.select(table_cityName)) {
-//                print("allCityNames:\(item)")
                 cityNames.insert(item[table_cityName])
             }
         } catch let error {
             print(error)
         }
-        //sort the places
+        //sort the city names
         let result = Array(cityNames).sorted {
             $0 < $1
         }
@@ -96,11 +95,9 @@ struct Database {
     
     //get all weather query items of one city
     func allWeatherItemsForCity(city:String ) -> Array<WeatherQuery> {
-        
         var weatherQueries:[WeatherQuery] = []
         do {
             for item in try db.prepare(tableWeather.filter(table_cityName.lowercaseString==city.lowercased()).order(table_queryDate.desc)) {
-                print("allWeatherItemsForCity:\(item)")
                 let weatherQuery = WeatherQuery(queryDate: item[table_queryDate], cityName: item[table_cityName], tempMin: item[table_tempMin], temp: item[table_temp], tempMax: item[table_tempMax])
                 weatherQueries.append(weatherQuery)
             }
@@ -111,27 +108,25 @@ struct Database {
     }
     
     //get last weather query item of one city
-    func weatherQueryItemForCity(city:String ) -> WeatherQuery?{
+    func lastWeatherQueryItemForCity(city:String ) -> WeatherQuery?{
         var weatherQuery:WeatherQuery?
         do {
             for item in try db.prepare(tableWeather.filter(table_cityName.lowercaseString==city.lowercased()).order(table_queryDate.desc)) {
-//                print("weatherQueryItemForCity:\(item)")
                 weatherQuery = WeatherQuery(queryDate: item[table_queryDate], cityName: item[table_cityName], tempMin: item[table_tempMin], temp: item[table_temp], tempMax: item[table_tempMax])
                 break;
             }
         } catch let error {
             print(error)
         }
-        
         return weatherQuery
     }
     
-    //get city row for table
+    //get city rows for table
     func allCityRows() -> Array<WeatherQuery> {
         let cities = self.allCityNames()
         var queries: [WeatherQuery]  = []
         for cityString in cities {
-            let query = self.weatherQueryItemForCity(city: cityString)
+            let query = self.lastWeatherQueryItemForCity(city: cityString)
             if let query = query{
                 queries.append(query)
             }

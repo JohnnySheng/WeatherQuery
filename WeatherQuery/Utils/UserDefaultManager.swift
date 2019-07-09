@@ -11,8 +11,9 @@ import Foundation
 
 class UserDefaultManager {
     
-    //On:True:Fahrenheit
+    //On:true->Fahrenheit
     static var userDefaultSwitch = "UserDefaultSwitch"
+    //On:true-> Location is querying
     static var userDefaultLocationQuery = "UserDefaultLocationQuerying"
 
     //MARK: - For Switch
@@ -25,7 +26,7 @@ class UserDefaultManager {
         UserDefaults.standard.set(status, forKey: UserDefaultManager.userDefaultSwitch)
     }
   
-    //MARK: - For Location Querying
+    //MARK: - For Location Querying Delegate
     static func locationQueryStatus() -> Bool {
         let currentStatus = UserDefaults.standard.bool(forKey: UserDefaultManager.userDefaultLocationQuery)
         return currentStatus

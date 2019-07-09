@@ -35,7 +35,6 @@ class WeatherTableHeaderView: UIView {
         
         self.addSubview(mainSubview!)
         updateSwitch()
-        
     }
     
     func updateSwitch() {
