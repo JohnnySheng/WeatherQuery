@@ -10,6 +10,9 @@ import UIKit
 import Charts
 
 class WeatherChartViewController: UIViewController{
+    var dateTools = DateTools()
+    var tempTools = TempTools()
+    var defaultsManager = UserDefaultsManager()
     @IBOutlet weak var candleStickChart: CandleStickChartView!
     
     fileprivate let MAX_AMOUNT = 20
@@ -29,16 +32,16 @@ class WeatherChartViewController: UIViewController{
             let open = queries[i].tempMin
             let close = queries[i].tempMax
             return CandleChartDataEntry(x: Double(i),
-                                        shadowH: TempTools.rightValueByUnit(grad: high),
-                                        shadowL: TempTools.rightValueByUnit(grad: low),
-                                        open: TempTools.rightValueByUnit(grad: open),
-                                        close: TempTools.rightValueByUnit(grad: close))
+                                        shadowH: tempTools.rightValueByUnit(grad: high, defaultsManager: defaultsManager),
+                                        shadowL: tempTools.rightValueByUnit(grad: low, defaultsManager: defaultsManager),
+                                        open: tempTools.rightValueByUnit(grad: open, defaultsManager:  defaultsManager),
+                                        close: tempTools.rightValueByUnit(grad: close, defaultsManager: defaultsManager))
         }
-        let chartDataSet = CandleChartDataSet(entries: dataEntries, label: "Weather Data with Unit: \(TempTools.currentUnit())")
+        let chartDataSet = CandleChartDataSet(entries: dataEntries, label: "Weather Data with Unit: \(tempTools.currentUnit(defaultsManager: defaultsManager))")
 
         let dateEntries = (0..<queries.count).map { (i) -> String in
             let date = queries[i].queryDate
-            return DateTools.chartDateString(fromDate: date)
+            return dateTools.chartDateString(fromDate: date)
         }
         candleStickChart.xAxis.valueFormatter = IndexAxisValueFormatter.init(values: dateEntries)
         chartDataSet.increasingFilled = true

@@ -9,6 +9,7 @@
 import UIKit
 
 class WeatherMainView: UIView {
+    
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var tempSwitch: UISwitch!
     @IBOutlet weak var tempLabel: UILabel!

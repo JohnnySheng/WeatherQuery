@@ -9,7 +9,7 @@
 import Foundation
 class DateTools {
     //MARK: - Generate date string in format "dd.MM.yyyy HH:mm:ss"
-    static func dateString(fromDate date:Date) -> String {
+    func dateString(fromDate date:Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
@@ -17,7 +17,7 @@ class DateTools {
     }
     
     //MARK: - Generate date string in format "dd.MM"
-    static func chartDateString(fromDate date:Date) -> String {
+    func chartDateString(fromDate date:Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.dateFormat = "dd.MM"

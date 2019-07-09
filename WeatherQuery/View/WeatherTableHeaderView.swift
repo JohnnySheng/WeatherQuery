@@ -10,6 +10,7 @@ import UIKit
 
 class WeatherTableHeaderView: UIView {
     
+    var defaultsManager = UserDefaultsManager()
     var mainSubview: WeatherMainView?
     
     var tableView: UITableView?
@@ -38,7 +39,7 @@ class WeatherTableHeaderView: UIView {
     }
     
     func updateSwitch() {
-        self.mainSubview?.tempSwitch.setOn(UserDefaultManager.switchStatus(), animated: false)
+        self.mainSubview?.tempSwitch.setOn(defaultsManager.switchStatus(), animated: false)
     }
     
     

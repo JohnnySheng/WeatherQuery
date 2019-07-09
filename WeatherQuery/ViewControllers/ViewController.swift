@@ -10,6 +10,11 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDelegate, UITableViewDelegate,UITableViewDataSource{
+    
+    var defaultsManager = UserDefaultsManager()
+    var tempTools = TempTools()
+    var dateTools = DateTools()
+    
     // MARK: - Variables
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var mainView: UIView!
@@ -37,7 +42,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         databaseInit()
         updateTableHeader()
         LocationService.sharedInstance.delegate = self
-        UserDefaultManager.saveLocationQueryStatus(false)
+        defaultsManager.saveLocationQueryStatus(false)
         
     }
     
@@ -69,7 +74,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     }
     
     @objc func switchPressed(_ sender: UISwitch) {
-        UserDefaultManager.saveSwitchStatus(sender.isOn)
+        defaultsManager.saveSwitchStatus(sender.isOn)
         updateEntireView()
     }
     
@@ -102,8 +107,8 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     func activityIndicatorStop() {
         self.activityIndicator.stopAnimating()
-        if UserDefaultManager.locationQueryStatus() {
-            UserDefaultManager.saveLocationQueryStatus(false)
+        if defaultsManager.locationQueryStatus() {
+            defaultsManager.saveLocationQueryStatus(false)
         }
         cityTextField.text = ""
     }
@@ -132,8 +137,8 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         let weatherQueryCell =
             tableView.dequeueReusableCell(withIdentifier: weatherTableCellIdentifier, for: indexPath) as! WeatherTableViewCell
         let query = cityList[indexPath.row]
-        weatherQueryCell.cityLabel.text = TempTools.cityTempString(fromQuery: query)
-        weatherQueryCell.dateLabel.text = DateTools.dateString(fromDate: query.queryDate)
+        weatherQueryCell.cityLabel.text = tempTools.cityTempString(fromQuery: query,defaultsManager: defaultsManager)
+        weatherQueryCell.dateLabel.text = dateTools.dateString(fromDate: query.queryDate)
         weatherQueryCell.chartButton.tag = indexPath.row
         return weatherQueryCell
     }
@@ -181,7 +186,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     
     func updateMainViewWith(weather : WeatherQuery) {
         tableHeaderView.mainSubview?.cityLabel.text = weather.cityName
-        tableHeaderView.mainSubview?.tempLabel.text = TempTools.tempStringWithoutLetter(weather: weather)
+        tableHeaderView.mainSubview?.tempLabel.text = tempTools.tempStringWithoutLetter(weather: weather, defaultsManager: defaultsManager)
         if weather.temp < 10 {
             tableHeaderView.mainSubview?.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         }else if weather.temp > 25{
@@ -193,10 +198,10 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
     // MARK: - Location Service Delegate
     func tracingLocation(currentLocation: CLLocation) {
         LocationService.sharedInstance.stopUpdatingLocation()
-        if UserDefaultManager.locationQueryStatus() {
+        if defaultsManager.locationQueryStatus() {
             return;
         }
-        UserDefaultManager.saveLocationQueryStatus(true)
+        defaultsManager.saveLocationQueryStatus(true)
         self.getWeatherForLocation(currentLocation)
     }
     
