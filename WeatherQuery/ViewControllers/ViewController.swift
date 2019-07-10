@@ -58,7 +58,7 @@ class ViewController: UIViewController, UITextFieldDelegate,LocationServiceDeleg
         let mainView = Bundle.main.loadNibNamed("WeatherMainView", owner: nil, options: nil)![0] as! WeatherMainView
         
         
-        tableHeaderView = WeatherTableHeaderView(subview: mainView, andType: 4)
+        tableHeaderView = WeatherTableHeaderView(subview: mainView)
         tableHeaderView.tableView = self.tableView
         tableHeaderView.maximumOffsetY = -60
         

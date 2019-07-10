@@ -22,7 +22,7 @@ class WeatherTableHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(subview: UIView, andType type: Int) {
+    required init(subview: UIView) {
         super.init(frame: subview.frame)
         
         self.initialSetupForCustomSubView(subview: subview)
